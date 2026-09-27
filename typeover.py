@@ -258,7 +258,7 @@ class Replacer:
         absolute coords, clamped to real text."""
         if len(sel.sub_selections) != 1:
             return None
-        r = sel.sub_selections[0].windowed_coord_range.coord_range
+        r = sel.sub_selections[0].windowed_coord_range.coordRange
         start, end = (r.start.y, r.start.x), (r.end.y, r.end.x)
         if end[1] == 0 and end[0] > start[0]:
             end = (end[0] - 1, snap.width)
@@ -275,7 +275,7 @@ class Replacer:
         mode = await self.mode()
         if mode is None:
             return None
-        r0 = sel.sub_selections[0].windowed_coord_range.coord_range if sel.sub_selections else None
+        r0 = sel.sub_selections[0].windowed_coord_range.coordRange if sel.sub_selections else None
         if r0 is None:
             return None
         rows = (r0.start.y, r0.end.y)
@@ -476,7 +476,7 @@ async def main(connection):
             if not sel.sub_selections:
                 last_sig = None
                 continue
-            r = sel.sub_selections[0].windowed_coord_range.coord_range
+            r = sel.sub_selections[0].windowed_coord_range.coordRange
             sig = (session.session_id, r.start.x, r.start.y, r.end.x, r.end.y)
             if sig == last_sig:
                 continue

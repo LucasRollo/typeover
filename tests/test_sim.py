@@ -33,7 +33,7 @@ class P:
 
 def mksel(y0, x0, y1, x1):
     r = types.SimpleNamespace(start=P(x0, y0 + ABOVE), end=P(x1, y1 + ABOVE))
-    sub = types.SimpleNamespace(windowed_coord_range=types.SimpleNamespace(coord_range=r))
+    sub = types.SimpleNamespace(windowed_coord_range=types.SimpleNamespace(coordRange=r))
     return Selection([sub])
 
 
