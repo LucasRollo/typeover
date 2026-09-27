@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # TypeOver installer for iTerm2.
 #
-#   curl -fsSL https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/typeover/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/LucasRollo/typeover/main/install.sh | bash
 #
 # What it does:
 #   1. Puts typeover.py in iTerm2's AutoLaunch folder (so it starts with iTerm).
@@ -9,7 +9,7 @@
 #   3. Starts the script.
 set -euo pipefail
 
-REPO="${TYPEOVER_REPO:-YOUR_GITHUB_USERNAME/typeover}"
+REPO="${TYPEOVER_REPO:-LucasRollo/typeover}"
 BRANCH="${TYPEOVER_BRANCH:-main}"
 RAW="https://raw.githubusercontent.com/${REPO}/${BRANCH}"
 PREFS="com.googlecode.iterm2"

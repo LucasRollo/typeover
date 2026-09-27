@@ -22,7 +22,7 @@ It takes about a tenth of a second.
 Paste this into iTerm:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/typeover/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/LucasRollo/typeover/main/install.sh | bash
 ```
 
 The installer puts the script in iTerm's AutoLaunch folder and turns on iTerm's Python API. If the API was off, it offers a quick iTerm restart. The first time the script runs, iTerm asks to download its Python runtime. Click OK.
@@ -30,7 +30,7 @@ The installer puts the script in iTerm's AutoLaunch folder and turns on iTerm's 
 To uninstall:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/typeover/main/uninstall.sh | bash
+curl -fsSL https://raw.githubusercontent.com/LucasRollo/typeover/main/uninstall.sh | bash
 ```
 
 ### Claude Code users: one setting
