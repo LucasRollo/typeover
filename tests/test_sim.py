@@ -135,13 +135,13 @@ class FakeEditor:
 
 
 class FakeSession:
-    def __init__(self, ed, job):
-        self.ed, self.job = ed, job
+    def __init__(self, ed, job, cmd=None):
+        self.ed, self.job, self.cmd = ed, job, job if cmd is None else cmd
         self.grid_size = types.SimpleNamespace(width=ed.width)
         self.session_id = "s1"
 
     async def async_get_variable(self, name):
-        return {"jobName": self.job, "commandLine": self.job}.get(name, "")
+        return {"jobName": self.job, "commandLine": self.cmd}.get(name, "")
 
     async def async_get_screen_contents(self):
         return self.ed.render()
@@ -163,8 +163,8 @@ def find(ed, word):
     raise AssertionError(word)
 
 
-async def run(ed, job, sel, typed):
-    s = FakeSession(ed, job)
+async def run(ed, job, sel, typed, cmd=None):
+    s = FakeSession(ed, job, cmd)
     ok = await typeover.Replacer(s).replace(sel, typed)
     return ok, ed.text
 
@@ -236,6 +236,19 @@ async def main():
     r, a, b = find(ed, "foo")
     ok &= check("claude: last word, caret at start", await run(ed, "claude", mksel(r, a, r, b), "b"),
                 (True, "rename the variable b"))
+
+    # 10. Native Claude binary: job name is its version, command line is "claude"
+    ed = FakeEditor("fix the right bug", 17)
+    r, a, b = find(ed, "right")
+    ok &= check("claude: native binary (version as job name)",
+                await run(ed, "2.1.283", mksel(r, a, r, b), "X", cmd="claude"),
+                (True, "fix the X bug"))
+
+    # 11. A shell command that only mentions claude is still a shell
+    ed = FakeEditor("vim claude.md", 13, style="shell")
+    r, a, b = find(ed, "claude")
+    ok &= check("shell: 'claude' in an argument stays shell mode",
+                await typeover.Replacer(FakeSession(ed, "zsh", "vim claude.md")).mode(), "shell")
 
     print("\nALL PASS" if ok else "\nSOME FAILED")
     return ok

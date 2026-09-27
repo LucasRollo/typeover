@@ -222,7 +222,10 @@ class Replacer:
     async def mode(self):
         job = (await self.s.async_get_variable("jobName") or "").lower()
         cmd = (await self.s.async_get_variable("commandLine") or "").lower()
-        if "claude" in job or ("node" in job and "claude" in cmd):
+        # The native Claude Code binary reports its version (e.g. "2.1.283")
+        # as the job name, so also check the command that started it.
+        prog = cmd.split()[0].rsplit("/", 1)[-1] if cmd.strip() else ""
+        if "claude" in job or "claude" in prog or ("node" in job and "claude" in cmd):
             return "claude"
         if job in SHELLS:
             return "shell"
